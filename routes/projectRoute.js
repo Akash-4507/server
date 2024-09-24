@@ -27,4 +27,23 @@ router.post('/add',async(req,res)=>{
         res.status(500).json(error)
     }
 })
+
+router.put('/update/:id',async(req,res)=>{
+    try{
+         const id=req.params.id
+        const currentdata=await projects.findOne({_id:id})
+        if(!currentdata)
+        {
+            res.status(400).json({message:"not foubnd"})
+        }
+        const updatedata=await projects.findByIdAndUpdate(id,req.body,{new:true})
+        res.status(200).json(updatedata)
+    }
+    catch(error)
+    {
+        res.status(500).json(error)
+    }
+})
+
+
 module.exports=router;
